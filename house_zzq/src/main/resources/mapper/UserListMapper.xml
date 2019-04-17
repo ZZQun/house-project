@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.UserListDao">
+	<select id="selectUserListByCondition" resultType="com.house.pojo.UserList">
+		select ul.*,u.type from userlist ul left join user u on ul.userid = u.id
+		<where>
+			<if test="name != '' and name != null">
+				and name like '%${name}%'
+			</if>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+		</where>
+		order by 
+		ul.id ASC
+	</select>
+
+	<select id="selectUserInfoByCondition" resultType="com.house.pojo.UserList">
+		select ul.*,u.type from userlist ul left join user u on ul.userid = u.id
+		<where>
+			<if test="name != '' and name != null">
+				and name like '%${name}%'
+			</if>
+			<if test="userId != null">
+				and ul.userid = #{userId}
+			</if>
+			<if test="id != null">
+				and ul.id = #{id}
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectCountByCondition" resultType="int">
+		select Count(*) from userlist ul left join user u on ul.userid = u.id
+		<where>
+			<if test="name != '' and name != null">
+				and name like '%${name}%'
+			</if>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+
+		</where>
+	</select>
+	
+	<select id="findUserListById" resultType="com.house.pojo.UserList">
+		select ul.*,u.type from userlist ul left join user u on ul.userid = u.id
+		where
+		ul.id = #{userListId}
+	</select>
+	
+	<insert id="insertUserList">
+	insert into 
+	userlist(name,idcard,phone,userid)
+	values
+	(#{name},#{idCard},#{phone},#{userId})
+	</insert>
+	
+	<delete id="deleteUserList"> 
+		delete from 
+		userlist 
+		where 
+		id=#{id} 
+	</delete>
+	
+	<update id="updateUserList"> 
+	update userlist 
+	<set>
+		<if test="name != null and name != ''">
+			name = #{name},
+		</if>
+		<if test="idCard != null and idCard != ''">
+			idcard = #{idCard},
+		</if>
+		<if test="phone != null and phone != ''">
+			phone = #{phone},
+		</if>
+	</set>
+	where id=#{id} 
+	</update>
+</mapper>

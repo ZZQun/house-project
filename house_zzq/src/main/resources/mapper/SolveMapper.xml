@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.SolveDao">
+    <select id="selectByCondition" resultType="com.house.pojo.Solve">
+        select * from solve
+        <where>
+            <if test="status != '' and status != null">
+                and status = #{status}
+            </if>
+            <if test="name != '' and name != null">
+                and name LIKE '%${name}%'
+            </if>
+            <if test="address != '' and address != null">
+                and address LIKE '%${address}%'
+            </if>
+            <if test="userlist_id != '' and userlist_id != null">
+                and userlist_id = #{userlist_id}
+            </if>
+        </where>
+        order by
+        status DESC ,date DESC
+    </select>
+
+    <select id="findSolveById" resultType="com.house.pojo.Solve">
+        SELECT * FROM solve
+        WHERE WHERE id = #{id}
+    </select>
+
+    <insert id="insertSolve">
+        INSERT INTO solve
+        (address,
+        date,
+        detail,
+        name,
+        userlist_id,
+        status,
+        houseid)
+        VALUES
+        (#{address},
+        #{date},
+        #{detail},
+        #{name},
+        #{userlist_id},
+        #{status},
+        #{houseId})
+    </insert>
+
+    <delete id="deleteSolveById">
+        DELETE FROM solve
+        WHERE id = #{id}
+    </delete>
+
+    <update id="updateSolve">
+      UPDATE solve
+      <set>
+          <if test="address != null and address != ''">
+              address = #{address},
+          </if>
+          <if test="date != null and date != ''">
+              date = #{date},
+          </if>
+          <if test="detail != null and detail != ''">
+              detail = #{detail},
+          </if>
+          <if test="name != null and name != ''">
+              name = #{name},
+          </if>
+          <if test="userlist_id != null and userlist_id != ''">
+              userlist_id = #{userlist_id},
+          </if>
+          <if test="status != null and status != ''">
+              status = #{status},
+          </if>
+          <if test="houseId != null and houseId != ''">
+              houseid = #{houseId},
+          </if>
+      </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

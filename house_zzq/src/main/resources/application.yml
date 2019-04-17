@@ -1,0 +1,31 @@
+server:
+  port: 9002
+spring:
+#  datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    druid:
+#      driver-class-name: com.mysql.jdbc.Driver
+#      url: jdbc:mysql://localhost:3306/house?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+#      username: root
+#      password: zzq845211164
+#      initialize: true
+  datasource:
+      type: com.alibaba.druid.pool.DruidDataSource
+      druid:
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://47.103.88.133:3306/house?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+        username: zzq
+        password: zzq845211164
+        initialize: true
+## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
+mybatis:
+   mapper-locations: classpath:mapper/*.xml #注意：一定要对应mapper映射xml文件的所在路径
+   type-aliases-package: com.house.pojo # 注意：对应实体类的路径
+   #mybatis.configuration.map-underscore-to-camel-case=true开启驼峰命名识别
+   configuration:
+     map-underscore-to-camel-case: true
+
+
+
+
+

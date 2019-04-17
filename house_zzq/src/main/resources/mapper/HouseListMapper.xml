@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.HouseListDao">
+    <resultMap id="HouseResultType" type="com.house.pojo.HouseList">
+        <id column="houseid" property="houseId"></id>
+        <result column="address" property="address"></result>
+        <result column="price" property="price"></result>
+        <result column="status" property="status"></result>
+        <result column="detail" property="detail"></result>
+        <result column="userlist_id" property="userlist_Id"></result>
+        <result column="userlist_name" property="userlist_Name"></result>
+    </resultMap>
+    <select id="selectHouseListByCondition" resultMap="HouseResultType">
+        select * from houselist
+        <where>
+            <if test="address != '' and address != null">
+                and address like '%${address}%'
+            </if>
+            <if test="status != '' and status != null">
+                and status = #{status}
+            </if>
+            <if test="userListId != null">
+                and userlist_id = #{userListId}
+            </if>
+        </where>
+        order by
+        status DESC ,houseid ASC,address ASC
+    </select>
+
+    <select id="selectHouseById" resultMap="HouseResultType">
+        SELECT *
+        FROM houselist
+        WHERE houseid=#{houseId}
+    </select>
+
+    <delete id="deleteHouseListById">
+        DELETE FROM
+        houselist
+        WHERE houseid=#{houseId}
+    </delete>
+
+    <insert id="insertHouseList">
+        INSERT INTO
+        houselist (address,price,status,detail,userlist_id,userlist_name)
+        VALUES (#{address},#{price},#{status},#{detail},#{userlist_Id},#{userlist_Name})
+    </insert>
+
+    <update id="updateHouseList">
+        UPDATE houselist
+        SET
+        address=#{address},
+        price=#{price},
+        status=#{status},
+        detail=#{detail},
+        userlist_id=#{userlist_Id},
+        userlist_name=#{userlist_Name}
+        WHERE houseid=#{houseId}
+    </update>
+</mapper>

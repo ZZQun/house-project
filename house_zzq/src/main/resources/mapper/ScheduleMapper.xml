@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.ScheduleDao">
+    <select id="selectByCondition" resultType="com.house.pojo.Schedule">
+        select * from schedule
+        order by
+        date DESC
+    </select>
+    <select id="findScheduleById" resultType="com.house.pojo.Schedule">
+        SELECT * FROM schedule
+        WHERE id=#{id}
+    </select>
+
+    <select id="selectScheduleInSevenDays" resultType="com.house.pojo.Schedule">
+        select * from schedule
+        WHERE TIMESTAMPDIFF(DAY,date,#{todayDate}) <![CDATA[ <= ]]> time
+        order by
+        date DESC
+    </select>
+
+    <delete id="deleteScheduleById">
+        DELETE FROM
+        schedule
+        WHERE id = #{id}
+    </delete>
+    <insert id="insertSchedule">
+        INSERT INTO
+        schedule(date,content,time)
+        VALUES
+        (#{date},#{content},#{time})
+    </insert>
+    <update id="updateSchedule">
+        UPDATE schedule
+        <set>
+            <if test="date != null">
+                date = #{date},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
+</mapper>

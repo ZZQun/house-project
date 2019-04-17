@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.dao.UserDao">
+	<select id="selectByUsernameAndPassword" resultType="com.house.pojo.User">
+		select * from user u where u.username = #{username} and u.password = #{password}
+	</select>
+	
+	<select id="selectUserById" resultType="com.house.pojo.User">
+		select * from user where id = #{id}
+	</select>
+	
+	<insert id="insertUser" parameterType="com.house.pojo.User" keyProperty="id" useGeneratedKeys="true">
+	insert into 
+	user(username,password,type)
+	values
+	(#{username},#{password},#{type})
+	</insert>
+	
+	<delete id="deleteUser"> 
+		delete from 
+		user 
+		where 
+		id=#{id} 
+	</delete>
+
+	<update id="updateUser">
+		update user
+		<set>
+			<if test="password != null and password != ''">
+				password = #{password},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+
+</mapper>
